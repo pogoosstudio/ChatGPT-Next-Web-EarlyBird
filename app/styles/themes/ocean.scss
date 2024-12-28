@@ -1,0 +1,14 @@
+/* 海洋蓝主题 */
+@mixin ocean-light {
+  --primary: #315ef8;
+  --second: #f3f3f6;
+  --hover-color: #f3f3f3;
+  --bar-color: rgba(0, 0, 0, .1);
+}
+
+@mixin ocean-dark {
+  --primary: #315ef8;
+  --second: #26262c;
+  --hover-color: #323232;
+  --bar-color: hsla(0, 0%, 100%, .1);
+}
