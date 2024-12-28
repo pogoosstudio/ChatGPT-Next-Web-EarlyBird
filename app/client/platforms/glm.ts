@@ -54,6 +54,32 @@ interface VideoGenerationPayload extends BasePayload {
 
 type ModelType = "chat" | "image" | "video";
 
+interface BasePayload {
+  model: string;
+}
+
+interface ChatPayload extends BasePayload {
+  messages: ChatOptions["messages"];
+  stream?: boolean;
+  temperature?: number;
+  presence_penalty?: number;
+  frequency_penalty?: number;
+  top_p?: number;
+}
+
+interface ImageGenerationPayload extends BasePayload {
+  prompt: string;
+  size?: string;
+  user_id?: string;
+}
+
+interface VideoGenerationPayload extends BasePayload {
+  prompt: string;
+  duration?: number;
+  resolution?: string;
+  user_id?: string;
+}
+
 export class ChatGLMApi implements LLMApi {
   private disableListModels = true;
 
