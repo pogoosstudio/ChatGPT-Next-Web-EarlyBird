@@ -57,7 +57,6 @@ import {
   Theme,
   useAppConfig,
   DEFAULT_TOPIC,
-  ModelType,
   usePluginStore,
 } from "../store";
 
@@ -122,9 +121,10 @@ import { createTTSPlayer } from "../utils/audio";
 import { MsEdgeTTS, OUTPUT_FORMAT } from "../utils/ms_edge_tts";
 
 import { isEmpty } from "lodash-es";
-import { getModelProvider } from "../utils/model";
 import { RealtimeChat } from "@/app/components/realtime-chat";
 import clsx from "clsx";
+
+import { ModelSelector } from "@/app/components/ui/model-selector";
 
 const localStorage = safeLocalStorage();
 
@@ -640,41 +640,31 @@ export function ChatActions(props: {
           text={currentModelName}
           icon={<RobotIcon />}
         />
-
-        {showModelSelector && (
-          <Selector
-            defaultSelectedValue={`${currentModel}@${currentProviderName}`}
-            items={models.map((m) => ({
-              title: `${m.displayName}${
-                m?.provider?.providerName
-                  ? " (" + m?.provider?.providerName + ")"
-                  : ""
-              }`,
-              value: `${m.name}@${m?.provider?.providerName}`,
-            }))}
-            onClose={() => setShowModelSelector(false)}
-            onSelection={(s) => {
-              if (s.length === 0) return;
-              const [model, providerName] = getModelProvider(s[0]);
-              chatStore.updateTargetSession(session, (session) => {
-                session.mask.modelConfig.model = model as ModelType;
-                session.mask.modelConfig.providerName =
-                  providerName as ServiceProvider;
-                session.mask.syncGlobalConfig = false;
-              });
-              if (providerName == "ByteDance") {
-                const selectedModel = models.find(
-                  (m) =>
-                    m.name == model &&
-                    m?.provider?.providerName == providerName,
-                );
-                showToast(selectedModel?.displayName ?? "");
-              } else {
-                showToast(model);
-              }
-            }}
-          />
-        )}
+        <ModelSelector
+          visible={showModelSelector}
+          onClose={() => setShowModelSelector(false)}
+          models={models}
+          defaultModel={currentModel}
+          defaultProvider={currentProviderName}
+          onSelection={(model) => {
+            chatStore.updateTargetSession(session, (session) => {
+              session.mask.modelConfig.model = model.name;
+              session.mask.modelConfig.providerName = model?.provider
+                ?.providerName as ServiceProvider;
+              session.mask.syncGlobalConfig = false;
+            });
+            if (model?.provider?.providerName == "ByteDance") {
+              const selectedModel = models.find(
+                (m) =>
+                  m.name == model.name &&
+                  m?.provider?.providerName == model?.provider?.providerName,
+              );
+              showToast(selectedModel?.displayName ?? "");
+            } else {
+              showToast(model.name);
+            }
+          }}
+        />
 
         {supportsCustomSize(currentModel) && (
           <ChatAction
