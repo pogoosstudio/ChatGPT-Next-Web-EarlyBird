@@ -1,9 +1,9 @@
 import { Drawer, Input, ConfigProvider } from "antd";
 import styles from "./model-selector.module.scss";
-import { MaskAvatar } from "../../mask";
 import { useState, useMemo } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import clsx from "clsx";
+import { ProviderAvatar } from "../model-avatar";
 
 export interface ModelType {
   name: string;
@@ -12,7 +12,6 @@ export interface ModelType {
   provider?: {
     providerName: string;
   };
-  isDefault?: boolean;
   sorted?: number;
 }
 
@@ -163,9 +162,8 @@ export const ModelSelector = (props: Props) => {
                       onClick={() => handleModelSelect(model)}
                     >
                       <div className={styles["model-icon"]}>
-                        <MaskAvatar
-                          avatar="default-avatar"
-                          model={model.name}
+                        <ProviderAvatar
+                          provider={model.provider?.providerName}
                         />
                       </div>
                       <div className={styles["model-info"]}>

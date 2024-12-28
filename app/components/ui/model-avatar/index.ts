@@ -1,1 +1,1 @@
-export * from "./model-avatar";
+export * from "./provider-avatar";
