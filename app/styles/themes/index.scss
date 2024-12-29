@@ -1,0 +1,47 @@
+// 导入所有主题
+@import "./coral.scss";
+@import "./mint.scss"; 
+@import "./purple.scss";
+@import "./ocean.scss";
+
+// 定义主题映射mixin
+@mixin apply-theme($mode) {
+  // 应用默认主题
+  @if $mode == "light" {
+    @include mint-light;
+  } @else {
+    @include mint-dark;
+  }
+  // 应用其他主题
+  &[data-theme="coral"] {
+    @if $mode == "light" {
+      @include coral-light;
+    } @else {
+      @include coral-dark;
+    }
+  }
+  
+  &[data-theme="mint"] {
+    @if $mode == "light" {
+      @include mint-light;
+    } @else {
+      @include mint-dark;
+    }
+  }
+  
+  &[data-theme="purple"] {
+    @if $mode == "light" {
+      @include purple-light;
+    } @else {
+      @include purple-dark;
+    }
+  }
+  
+  &[data-theme="ocean"] {
+    @if $mode == "light" {
+      @include ocean-light;
+    } @else {
+      @include ocean-dark;
+    }
+  }
+} 

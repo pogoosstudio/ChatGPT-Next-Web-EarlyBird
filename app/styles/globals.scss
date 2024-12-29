@@ -1,12 +1,6 @@
 @import "./animation.scss";
 @import "./window.scss";
-@import "./themes/coral.scss";
-@import "./themes/mint.scss";
-@import "./themes/purple.scss";
-@import "./themes/ocean.scss";
-
-// 获取环境变量中的主题色，不设置默认值，由 next.config.mjs 传入
-$theme: "" !default;
+@import "./themes/index.scss";
 
 @mixin light {
   --theme: light;
@@ -25,15 +19,7 @@ $theme: "" !default;
   /* stroke */
   --border-in-light: 1px solid rgba(0, 0, 0, 0.1);
 
-  @if $theme == "coral" {
-    @include coral-light;
-  } @else if $theme == "mint" {
-    @include mint-light;
-  } @else if $theme == "purple" {
-    @include purple-light;
-  } @else if $theme == "ocean" {
-    @include ocean-light;
-  }
+  @include apply-theme("light");
 }
 
 @mixin dark {
@@ -57,15 +43,7 @@ $theme: "" !default;
     filter: invert(0.5);
   }
 
-  @if $theme == "coral" {
-    @include coral-dark;
-  } @else if $theme == "mint" {
-    @include mint-dark;
-  } @else if $theme == "purple" {
-    @include purple-dark;
-  } @else if $theme == "ocean" {
-    @include ocean-dark;
-  }
+  @include apply-theme("dark");
 }
 
 .light {
@@ -89,6 +67,7 @@ $theme: "" !default;
   --window-content-width: calc(100% - var(--sidebar-width));
   --message-max-width: 80%;
   --full-height: 100%;
+  --theme-name: "mint";
 }
 
 @media only screen and (max-width: 600px) {
