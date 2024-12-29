@@ -242,5 +242,6 @@ export const getServerSideConfig = () => {
     customModels,
     defaultModel,
     allowedWebDavEndpoints,
+    themeColor: process.env.THEME_COLOR,
   };
 };
