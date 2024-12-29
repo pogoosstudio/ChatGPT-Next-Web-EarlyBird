@@ -382,6 +382,10 @@ Stability API key.
 
 Customize Stability API url.
 
+### `THEME_COLOR` (optional)
+
+Customize theme color. Available options: `coral`, `mint`, `purple`, `ocean`,`mint` is the default theme.
+
 ## Requirements
 
 NodeJS >= 18, Docker >= 20
