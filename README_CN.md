@@ -254,6 +254,9 @@ Stability API密钥
 
 自定义的Stability API请求地址
 
+### `THEME_COLOR` (optional)
+
+自定义主题颜色。可用选项：`coral`, `mint`, `purple`, `ocean`,`mint` 是默认主题色。
 
 ## 开发
 

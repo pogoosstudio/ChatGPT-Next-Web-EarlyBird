@@ -228,6 +228,9 @@ ByteDance モードでは、`modelName@bytedance=deploymentName` 形式でモデ
 
 『設定』の『ユーザー入力前処理』の初期設定に使用するテンプレートをカスタマイズします。
 
+### `THEME_COLOR` (オプション)
+
+テーマカラーをカスタマイズします。利用可能なオプション：`coral`, `mint`, `purple`, `ocean`,`mint` はデフォルトのテーマです。
 
 ## 開発
 

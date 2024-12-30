@@ -35,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme={serverConfig.themeColor}>
       <head>
         <meta name="config" content={JSON.stringify(getClientConfig())} />
         <meta

@@ -6,9 +6,6 @@ console.log("[Next] build mode", mode);
 const disableChunk = !!process.env.DISABLE_CHUNK || mode === "export";
 console.log("[Next] build with chunk: ", !disableChunk);
 
-const theme = process.env.THEME_COLOR ?? "mint";
-console.log("[Next] build with theme: ", theme);
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack(config) {
@@ -37,7 +34,7 @@ const nextConfig = {
     forceSwcTransforms: true,
   },
   sassOptions: {
-    additionalData: `$theme: "${theme}";`,
+    
   },
 };
 

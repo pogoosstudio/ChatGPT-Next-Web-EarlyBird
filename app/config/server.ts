@@ -23,7 +23,7 @@ declare global {
       DISABLE_FAST_LINK?: string; // disallow parse settings from url or not
       CUSTOM_MODELS?: string; // to control custom models
       DEFAULT_MODEL?: string; // to control default model in every new chat window
-
+      THEME_COLOR?: string; // to control theme color
       // stability only
       STABILITY_URL?: string;
       STABILITY_API_KEY?: string;
@@ -242,5 +242,6 @@ export const getServerSideConfig = () => {
     customModels,
     defaultModel,
     allowedWebDavEndpoints,
+    themeColor: process.env.THEME_COLOR,
   };
 };
