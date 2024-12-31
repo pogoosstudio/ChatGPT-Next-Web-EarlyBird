@@ -80,6 +80,12 @@ declare global {
       CHATGLM_URL?: string;
       CHATGLM_API_KEY?: string;
 
+      // bedrock only
+      AWS_REGION?: string;
+      AWS_ACCESS_KEY?: string;
+      AWS_SECRET_KEY?: string;
+      ENCRYPTION_KEY?: string;
+
       // custom template for preprocessing user input
       DEFAULT_INPUT_TEMPLATE?: string;
     }
@@ -150,6 +156,10 @@ export const getServerSideConfig = () => {
   const isIflytek = !!process.env.IFLYTEK_API_KEY;
   const isXAI = !!process.env.XAI_API_KEY;
   const isChatGLM = !!process.env.CHATGLM_API_KEY;
+  const isBedrock =
+    !!process.env.AWS_REGION &&
+    !!process.env.AWS_ACCESS_KEY &&
+    !!process.env.AWS_SECRET_KEY;
   // const apiKeyEnvVar = process.env.OPENAI_API_KEY ?? "";
   // const apiKeys = apiKeyEnvVar.split(",").map((v) => v.trim());
   // const randomIndex = Math.floor(Math.random() * apiKeys.length);
@@ -219,6 +229,12 @@ export const getServerSideConfig = () => {
     isChatGLM,
     chatglmUrl: process.env.CHATGLM_URL,
     chatglmApiKey: getApiKey(process.env.CHATGLM_API_KEY),
+
+    isBedrock,
+    awsRegion: process.env.AWS_REGION,
+    awsAccessKey: process.env.AWS_ACCESS_KEY,
+    awsSecretKey: process.env.AWS_SECRET_KEY,
+    encryptionKey: process.env.ENCRYPTION_KEY,
 
     cloudflareAccountId: process.env.CLOUDFLARE_ACCOUNT_ID,
     cloudflareKVNamespaceId: process.env.CLOUDFLARE_KV_NAMESPACE_ID,

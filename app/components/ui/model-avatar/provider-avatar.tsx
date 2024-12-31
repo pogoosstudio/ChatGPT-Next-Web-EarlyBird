@@ -10,7 +10,7 @@ import HunyuanIcon from "@/app/icons/models/hunyuan-color.svg";
 import MoonshotIcon from "@/app/icons/models/moonshot.svg";
 import SparkIcon from "@/app/icons/models/spark-color.svg";
 import WenxinIcon from "@/app/icons/models/wenxin-color.svg";
-
+import BedrockIcon from "@/app/icons/models/bedrock-color.svg";
 import { ServiceProvider } from "@/app/constant";
 
 interface ProviderAvatarProps {
@@ -48,6 +48,8 @@ export const ProviderAvatar = (props: ProviderAvatarProps) => {
         return <GrokIcon className="user-avatar" />;
       case ServiceProvider.ChatGLM:
         return <ChatglmIcon className="user-avatar" />;
+      case ServiceProvider.Bedrock:
+        return <BedrockIcon className="user-avatar" />;
       default:
         return <OpenaiIcon className="user-avatar" />;
     }

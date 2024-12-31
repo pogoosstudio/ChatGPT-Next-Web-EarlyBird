@@ -12,6 +12,7 @@ import { handle as stabilityHandler } from "../../stability";
 import { handle as iflytekHandler } from "../../iflytek";
 import { handle as xaiHandler } from "../../xai";
 import { handle as chatglmHandler } from "../../glm";
+import { handle as bedrockHandler } from "../../bedrock";
 import { handle as proxyHandler } from "../../proxy";
 
 async function handle(
@@ -46,6 +47,8 @@ async function handle(
       return chatglmHandler(req, { params });
     case ApiPath.OpenAI:
       return openaiHandler(req, { params });
+    case ApiPath.Bedrock:
+      return bedrockHandler(req, { params });
     default:
       return proxyHandler(req, { params });
   }

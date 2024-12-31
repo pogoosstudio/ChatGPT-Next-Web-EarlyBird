@@ -15,6 +15,7 @@ import {
   IFLYTEK_BASE_URL,
   XAI_BASE_URL,
   CHATGLM_BASE_URL,
+  BEDROCK_BASE_URL,
 } from "../constant";
 import { getHeaders } from "../client/api";
 import { getClientConfig } from "../config/client";
@@ -22,6 +23,7 @@ import { createPersistStore } from "../utils/store";
 import { ensure } from "../utils/clone";
 import { DEFAULT_CONFIG } from "./config";
 import { getModelProvider } from "../utils/model";
+import { encrypt, decrypt } from "../utils/aws";
 
 let fetchState = 0; // 0 not fetch, 1 fetching, 2 done
 
@@ -50,6 +52,8 @@ const DEFAULT_IFLYTEK_URL = isApp ? IFLYTEK_BASE_URL : ApiPath.Iflytek;
 const DEFAULT_XAI_URL = isApp ? XAI_BASE_URL : ApiPath.XAI;
 
 const DEFAULT_CHATGLM_URL = isApp ? CHATGLM_BASE_URL : ApiPath.ChatGLM;
+
+const DEFAULT_BEDROCK_URL = isApp ? BEDROCK_BASE_URL : ApiPath.Bedrock;
 
 const DEFAULT_ACCESS_STATE = {
   accessCode: "",
@@ -115,6 +119,14 @@ const DEFAULT_ACCESS_STATE = {
   // chatglm
   chatglmUrl: DEFAULT_CHATGLM_URL,
   chatglmApiKey: "",
+
+  // aws bedrock
+  bedrockUrl: DEFAULT_BEDROCK_URL,
+  awsRegion: "",
+  awsAccessKey: "",
+  awsSecretKey: "",
+  encryptionKey: "",
+  bedrockAnthropicVersion: "bedrock-2023-05-31",
 
   // server config
   needCode: true,
@@ -192,6 +204,15 @@ export const useAccessStore = createPersistStore(
       return ensure(get(), ["chatglmApiKey"]);
     },
 
+    isValidBedrock() {
+      return ensure(get(), [
+        "awsRegion",
+        "awsAccessKey",
+        "awsSecretKey",
+        "encryptionKey",
+      ]);
+    },
+
     isAuthorized() {
       this.fetch();
 
@@ -209,6 +230,7 @@ export const useAccessStore = createPersistStore(
         this.isValidIflytek() ||
         this.isValidXAI() ||
         this.isValidChatGLM() ||
+        this.isValidBedrock() ||
         !this.enabledAccessControl() ||
         (this.enabledAccessControl() && ensure(get(), ["accessCode"]))
       );
@@ -244,6 +266,42 @@ export const useAccessStore = createPersistStore(
         .finally(() => {
           fetchState = 2;
         });
+    },
+    // Override the set method to encrypt AWS credentials before storage
+    set: (partial: { [key: string]: any }) => {
+      if (partial.awsAccessKey) {
+        partial.awsAccessKey = encrypt(
+          partial.awsAccessKey,
+          partial.encryptionKey,
+        );
+      }
+      if (partial.awsSecretKey) {
+        partial.awsSecretKey = encrypt(
+          partial.awsSecretKey,
+          partial.encryptionKey,
+        );
+      }
+      if (partial.awsRegion) {
+        partial.awsRegion = encrypt(partial.awsRegion, partial.encryptionKey);
+      }
+      set(partial);
+    },
+
+    // Add getter to decrypt AWS credentials when needed
+    get: () => {
+      const state = get();
+      return {
+        ...state,
+        awsRegion: state.awsRegion
+          ? decrypt(state.awsRegion, state.encryptionKey)
+          : "",
+        awsAccessKey: state.awsAccessKey
+          ? decrypt(state.awsAccessKey, state.encryptionKey)
+          : "",
+        awsSecretKey: state.awsSecretKey
+          ? decrypt(state.awsSecretKey, state.encryptionKey)
+          : "",
+      };
     },
   }),
   {
