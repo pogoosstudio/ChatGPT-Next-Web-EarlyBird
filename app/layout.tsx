@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   title: "Pogo AI",
   description: "Tu bot asistente IA personal. ",
   appleWebApp: {
-    title: "NextChat",
+    title: "Pogo AI",
     statusBarStyle: "default",
   },
 };
