@@ -33,7 +33,7 @@ import clsx from "clsx";
 
 const DISCOVERY = [
   { name: Locale.Plugin.Name, path: Path.Plugins },
-  { name: "Stable Diffusion", path: Path.Sd },
+  { name: "Difusión estable", path: Path.Sd },
   { name: Locale.SearchChat.Page.Title, path: Path.SearchChat },
 ];
 
@@ -236,8 +236,8 @@ export function SideBar(props: { className?: string }) {
       {...props}
     >
       <SideBarHeader
-        title="NextChat"
-        subTitle="Build your own AI assistant."
+        title="Pogo AI"
+        subTitle="Construye tu propio asistente de IA. "
         logo={<ChatGptIcon />}
         shouldNarrow={shouldNarrow}
       >
