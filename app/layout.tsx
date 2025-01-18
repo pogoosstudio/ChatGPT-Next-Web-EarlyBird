@@ -11,8 +11,8 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 const serverConfig = getServerSideConfig();
 
 export const metadata: Metadata = {
-  title: "NextChat",
-  description: "Your personal ChatGPT Chat Bot.",
+  title: "Pogo AI",
+  description: "Tu bot asistente IA personal. ",
   appleWebApp: {
     title: "NextChat",
     statusBarStyle: "default",
@@ -35,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-theme={serverConfig.themeColor}>
+    <html lang="es" data-theme={serverConfig.themeColor}>
       <head>
         <meta name="config" content={JSON.stringify(getClientConfig())} />
         <meta
